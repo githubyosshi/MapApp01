@@ -1,9 +1,11 @@
 package com.brown_chicken.mapapp01;
 
-import androidx.fragment.app.FragmentActivity;
-
 import android.os.Bundle;
 
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -18,10 +20,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //activity_maps.xmlに作成した内容を画面に表示
         setContentView(R.layout.activity_maps);
+
+        //プラグメント・マネージャwp取得
+        FragmentManager manager = getSupportFragmentManager()
+
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        //Mapのフラグメントを取得
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+
+        //Mapのフラグメントにコールバックを登録
         mapFragment.getMapAsync(this);
     }
 
@@ -40,8 +52,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
+        //Latlngクラスのオブジェクトを生成
         LatLng sydney = new LatLng(-34, 151);
+
+        //マップにマーカー追加
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+
+        //カメラの更新情報に従ってカメラ位置を変更
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        //カメラの更新情報を生成
+        CameraUpdate cUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(35.68,139.76),12);
+
+        //カメラの更新情報に従ってカメラ位置を変更
+        mMap.moveCamera(cUpdate);
     }
 }
